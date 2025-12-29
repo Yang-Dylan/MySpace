@@ -1,0 +1,17 @@
+fastapi==0.109.1
+uvicorn[standard]==0.24.0
+SQLAlchemy==2.0.23
+PyMySQL==1.1.0
+cryptography==41.0.7
+alembic==1.12.1
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-jose[cryptography]==3.4.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-multipart==0.0.19
+PyYAML==6.0.1
+httpx==0.25.2
+pytest==7.4.3
+pytest-cov==4.1.0
+

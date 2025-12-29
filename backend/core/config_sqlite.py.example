@@ -1,0 +1,7 @@
+"""
+使用 SQLite 的配置示例（开发环境）
+将 DATABASE_URL 改为使用 SQLite
+"""
+# 如果使用 SQLite，将 core/config.py 中的 DATABASE_URL 改为：
+# DATABASE_URL: str = "sqlite:///./api_automation.db"
+

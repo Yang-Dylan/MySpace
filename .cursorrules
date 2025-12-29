@@ -1,0 +1,55 @@
+# API自动化测试平台 - 项目规则
+
+## 数据库设计规则
+
+### 禁用外键约束
+本项目数据库设计**不使用外键约束（FOREIGN KEY）**。
+
+**理由**：
+- 便于数据迁移和分布式部署
+- 避免外键导致的锁竞争和性能问题
+- 数据完整性由应用层维护
+- 简化开发和测试流程
+
+**实施要求**：
+1. 所有 `CREATE TABLE` 语句不能包含 `FOREIGN KEY` 约束
+2. 使用 `INDEX` 替代外键来优化查询性能
+3. 数据关联逻辑在应用层（Python 代码）中实现
+4. 删除关联数据时，由应用层负责级联处理
+
+**示例**：
+```sql
+-- ✅ 正确：使用索引，不使用外键
+CREATE TABLE test_cases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    INDEX idx_user_id (user_id)
+);
+
+-- ❌ 错误：不要使用外键约束
+CREATE TABLE test_cases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+## 代码规范
+
+### 后端（Python/FastAPI）
+- 使用 Pydantic 模型进行数据验证
+- 所有 API 接口使用 Field() 添加详细描述
+- 数据库操作使用 SQLAlchemy ORM
+- 密码使用 bcrypt 加密
+
+### 前端（React/TypeScript）
+- 使用函数式组件和 Hooks
+- API 调用统一使用 axios 封装
+- 类型定义与后端 Schema 保持一致
+
+## 文件结构
+- `backend/sql/init.sql` - 数据库初始化脚本（无外键）
+- `backend/scripts/` - 初始化和工具脚本
+- `backend/models/` - SQLAlchemy 模型定义
+- `frontend/src/api/` - API 接口定义
+
